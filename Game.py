@@ -1,4 +1,4 @@
-import libtcodpy as tcod
+import tdl
 from entities.Player import Player
 
 class Game:
@@ -10,59 +10,55 @@ class Game:
         self.SCREEN_WIDTH = 80
         self.SCREEN_HEIGHT = 50
         self.LIMIT_FPS = 20
-        tcod.sys_set_fps(self.LIMIT_FPS)
 
-        font_path = 'arial10x10.png'  # this will look in the same folder as this script
-        font_flags = tcod.FONT_TYPE_GREYSCALE | tcod.FONT_LAYOUT_TCOD  # the layout may need to change with a different font file
-        tcod.console_set_custom_font(font_path, font_flags)
+        tdl.set_font('arial10x10.png', greyscale=True, altLayout=True)
+        self.root = tdl.init(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, title='AsciiRPG', fullscreen=False)
+        tdl.setFPS(self.LIMIT_FPS)
 
-        window_title = 'AsciiRPG'
-        fullscreen = False
-        tcod.console_init_root(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, window_title, fullscreen)
+        # Create an offscreen console
+        self.console = tdl.Console(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
         # Spawn player
         self.player = Player(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
     def _gameloop(self):
-        while not tcod.console_is_window_closed():
-            tcod.console_set_default_foreground(0, tcod.white) # 0 = screen
-            tcod.console_put_char(0, self.player.x, self.player.y, self.player.symbol, tcod.BKGND_NONE) # 0 = screen
-            tcod.console_flush() # present changes to the screen
+        while not tdl.event.isWindowClosed():
+            self.console.draw_char(self.player.x, self.player.y, self.player.symbol, bg=None, fg=(255,255,255))
+            self.root.blit(self.console, 0, 0, self.SCREEN_WIDTH, self.SCREEN_HEIGHT, 0, 0)
+            tdl.flush() # present changes to the screen
+            self.console.draw_char(self.player.x, self.player.y, ' ', bg=None, fg=(255,255,255))
 
-            tcod.console_put_char(0, self.player.x, self.player.y, ' ', tcod.BKGND_NONE)
-             #handle keys and exit game if needed
+            #handle keys and exit game if needed
             exit = self._handle_keys()
             if exit:
                 break
 
     def _handle_keys(self):
-        key = tcod.console_wait_for_keypress(True) # Entire game will stop until input is received
+        user_input = tdl.event.key_wait()
 
-        if key.vk == tcod.KEY_ENTER and key.lalt:
-            #Alt+Enter: toggle fullscreen
-            tcod.console_set_fullscreen(not tcod.console_is_fullscreen())
+        if user_input.key == 'ENTER' and user_input.alt:
+            # Alt+Enter: toggle fullscreen
+            tdl.set_fullscreen(not tdl.get_fullscreen())
+        elif user_input.key == 'ESCAPE':
+            return True  # exit game
 
-        elif key.vk == tcod.KEY_ESCAPE:
-            return True  #exit game
-
-        # movement keys
-        if tcod.console_is_key_pressed(tcod.KEY_KP8):
+        if user_input.key == 'KP8':
             self.player.y = self.player.y - 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP9):
-            self.player.y = self.player.y - 1
+        elif user_input.key == 'KP9':
+             self.player.y = self.player.y - 1
+             self.player.x = self.player.x + 1
+        elif user_input.key == 'KP6':
             self.player.x = self.player.x + 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP2):
-            self.player.y = self.player.y + 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP3):
+        elif user_input.key == 'KP3':
             self.player.y = self.player.y + 1
             self.player.x = self.player.x + 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP4):
+        elif user_input.key == 'KP2':
+            self.player.y = self.player.y + 1
+        elif user_input.key == 'KP1':
+             self.player.y = self.player.y + 1
+             self.player.x = self.player.x - 1
+        elif user_input.key == 'KP4':
             self.player.x = self.player.x - 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP1):
-            self.player.y = self.player.y + 1
-            self.player.x = self.player.x - 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP6):
-            self.player.x = self.player.x + 1
-        elif tcod.console_is_key_pressed(tcod.KEY_KP7):
+        elif user_input.key == 'KP7':
             self.player.y = self.player.y - 1
             self.player.x = self.player.x - 1

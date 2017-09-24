@@ -701,7 +701,7 @@ def console_get_height(con):
     return _lib.TCOD_console_get_height(con)
 
 def console_set_custom_font(fontFile, flags=FONT_LAYOUT_ASCII_INCOL, nb_char_horiz=0, nb_char_vertic=0):
-    _lib.TCOD_console_set_custom_font(c_char_p(fontFile), flags, nb_char_horiz, nb_char_vertic)
+    _lib.TCOD_console_set_custom_font(int(c_char_p(fontFile)), int(flags), int(nb_char_horiz), int(nb_char_vertic))
 
 def console_map_ascii_code_to_font(asciiCode, fontCharX, fontCharY):
     if type(asciiCode) == str or type(asciiCode) == bytes:

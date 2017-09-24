@@ -1,5 +1,5 @@
-class Player:
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
-        self.x = SCREEN_WIDTH / 2
-        self.y = SCREEN_HEIGHT / 2
-        self.symbol = '@'
+from entities.Entity import Entity
+
+class Player(Entity):
+    def __init__(self, x, y):
+        super().__init__(int(x / 2), int(y / 2), '@')
