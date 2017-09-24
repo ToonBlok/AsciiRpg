@@ -3,14 +3,13 @@ from entities.Player import Player
 
 class Game:
     def __init__(self):
-        self.setup()
-        self.gameloop()
+        self._setup()
+        self._gameloop()
 
-    def setup(self):
+    def _setup(self):
         self.SCREEN_WIDTH = 80
         self.SCREEN_HEIGHT = 50
         self.LIMIT_FPS = 20
-        self.TURN_BASED = True
         tcod.sys_set_fps(self.LIMIT_FPS)
 
         font_path = 'arial10x10.png'  # this will look in the same folder as this script
@@ -24,7 +23,7 @@ class Game:
         # Spawn player
         self.player = Player(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
-    def gameloop(self):
+    def _gameloop(self):
         while not tcod.console_is_window_closed():
             tcod.console_set_default_foreground(0, tcod.white) # 0 = screen
             tcod.console_put_char(0, self.player.x, self.player.y, self.player.symbol, tcod.BKGND_NONE) # 0 = screen
@@ -32,11 +31,11 @@ class Game:
 
             tcod.console_put_char(0, self.player.x, self.player.y, ' ', tcod.BKGND_NONE)
              #handle keys and exit game if needed
-            exit = self.handle_keys()
+            exit = self._handle_keys()
             if exit:
                 break
 
-    def handle_keys(self):
+    def _handle_keys(self):
         key = tcod.console_wait_for_keypress(True) # Entire game will stop until input is received
 
         if key.vk == tcod.KEY_ENTER and key.lalt:
