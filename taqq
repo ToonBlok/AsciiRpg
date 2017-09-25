@@ -1,0 +1,35 @@
+[33mcommit 80b917190952f81de5d5b9e8cf1c0e9e3cc24b2d[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 16:45:10 2017 +0200
+
+    Fleshed out Entity class
+
+[33mcommit 1dbebdeef9ba504fdf7adbbac6150a60d6d19c0e[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 16:26:29 2017 +0200
+
+    Changed Python version to 3.5.2, had to change some settings to make the project work again. All code now uses the appropriate tdl methods
+
+[33mcommit 1c9ad79393eecb2e79523095be077c3f46591687[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 15:33:14 2017 +0200
+
+    Completed part 1
+
+[33mcommit b83792031883e09fa4e260232e6243d7afcd1197[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 13:07:28 2017 +0200
+
+    Added movement
+
+[33mcommit 33777def1afb029d33df58f1b5efd5a76d33dfb8[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 12:24:52 2017 +0200
+
+    Added game class
+
+[33mcommit 4e0b404e1c0f028c8f1651d5e6336c0b6d38d223[m
+Author: Toon <ToonBlok@users.noreply.github.com>
+Date:   Sun Sep 24 12:10:13 2017 +0200
+
+    First commit
