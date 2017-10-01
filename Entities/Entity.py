@@ -9,7 +9,7 @@ class Entity:
         self.x += dx
         self.y += dy
 
-    def draw(self, console):
+    def render(self, console):
         console.draw_char(self.x, self.y, self.symbol, self.color)
 
     def clear(self, console):

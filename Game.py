@@ -1,6 +1,7 @@
 import tdl
-from entities.Player import Player
-from entities.Cat import Cat
+from Entities.Player import Player
+from Entities.Cat import Cat
+from World import World
 
 class Game:
     def __init__(self):
@@ -24,10 +25,21 @@ class Game:
         self.cat = Cat(self.SCREEN_WIDTH + 4, self.SCREEN_HEIGHT, (255,255,255))
         self.entities = [self.player, self.cat]
 
+        # Map
+        self.world = World()
+        self.world.create(self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
+
+
+    def _render(self):
+        self.world.render(self.console)
+
+        for entity in self.entities:
+            entity.render(self.console)
+
     def _gameloop(self):
         while not tdl.event.isWindowClosed():
-            for entity in self.entities:
-                entity.draw(self.console)
+
+            self._render()
 
             self.root.blit(self.console, 0, 0, self.SCREEN_WIDTH, self.SCREEN_HEIGHT, 0, 0)
             tdl.flush() # present changes to the screen
@@ -48,6 +60,8 @@ class Game:
             tdl.set_fullscreen(not tdl.get_fullscreen())
         elif user_input.key == 'ESCAPE':
             return True  # exit game
+
+        #if not self.world[self.x + dx][self.y + dy].blocked:
 
         if user_input.key == 'KP8':
             self.player.move(0, -1)

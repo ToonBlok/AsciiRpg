@@ -1,4 +1,4 @@
-from entities.Entity import Entity
+from Entities.Entity import Entity
 
 class Cat(Entity):
     def __init__(self, x, y, color):
