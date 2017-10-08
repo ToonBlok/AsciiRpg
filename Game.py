@@ -1,7 +1,9 @@
 import tdl
+from operator import add
 from Entities.Player import Player
 from Entities.Cat import Cat
-from World import World
+from Map import Map
+from random import randint
 
 class Game:
     def __init__(self):
@@ -20,18 +22,29 @@ class Game:
         # Create an offscreen console
         self.console = tdl.Console(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
-        # Spawn player
-        self.player = Player(self.SCREEN_WIDTH, self.SCREEN_HEIGHT, (255,255,255))
+        try:
+            player_y = 1
+            player_x = 1
+            while self.map.tiles[player_y][player_x].blocked:
+                player_y = randint(0, self.map.WIDTH - 1)
+                player_x = randint(0, self.map.HEIGHT - 1)
+                print(str(player_x) + ', ' + str(player_y))
+        except:
+            print("out of range")
+
+
+        # Spawn player, first specify Y (which of the top tiles to start at), then X (which of the horizontal tiles to start at)
+        self.player = Player(player_y, player_x, (255,255,255))
         self.cat = Cat(self.SCREEN_WIDTH + 4, self.SCREEN_HEIGHT, (255,255,255))
         self.entities = [self.player, self.cat]
 
         # Map
-        self.world = World()
-        self.world.create(self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
+        self.map = Map()
+        self.map.create(self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
 
 
     def _render(self):
-        self.world.render(self.console)
+        self.map.render(self.console)
 
         for entity in self.entities:
             entity.render(self.console)
@@ -61,21 +74,33 @@ class Game:
         elif user_input.key == 'ESCAPE':
             return True  # exit game
 
-        #if not self.world[self.x + dx][self.y + dy].blocked:
-
         if user_input.key == 'KP8':
-            self.player.move(0, -1)
+            if self._is_legal_move(0, -1):
+                self.player.move(0, -1)
         elif user_input.key == 'KP9':
-            self.player.move(1, -1)
+            if self._is_legal_move(1, -1):
+                self.player.move(1, -1)
         elif user_input.key == 'KP6':
-            self.player.move(1, 0)
+            if self._is_legal_move(1, 0):
+                self.player.move(1, 0)
         elif user_input.key == 'KP3':
-            self.player.move(1, 1)
+            if self._is_legal_move(1, 1):
+                self.player.move(1, 1)
         elif user_input.key == 'KP2':
-            self.player.move(0, 1)
+            if self._is_legal_move(0, 1):
+                self.player.move(0, 1)
         elif user_input.key == 'KP1':
-            self.player.move(-1, 1)
+            if self._is_legal_move(-1, 1):
+                self.player.move(-1, 1)
         elif user_input.key == 'KP4':
-            self.player.move(-1, 0)
+            if self._is_legal_move(-1, 0):
+                self.player.move(-1, 0)
         elif user_input.key == 'KP7':
-            self.player.move(-1, -1)
+            if self._is_legal_move(-1, -1):
+                self.player.move(-1, -1)
+        elif user_input.key == 'KP5':
+            print(str(self.player.x) + ', ' + str(self.player.y))
+
+    def _is_legal_move(self, x, y):
+        return False if self.map.tiles[add(self.player.x, x)][add(self.player.y, y)].blocked else True
+
