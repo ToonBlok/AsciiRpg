@@ -32,7 +32,6 @@ class Game:
             while self.map.tiles[player_y][player_x].blocked:
                 player_y = randint(0, self.map.WIDTH - 1)
                 player_x = randint(0, self.map.HEIGHT - 1)
-                print(str(player_x) + ', ' + str(player_y))
         except:
             print("out of range")
 
@@ -72,7 +71,7 @@ class Game:
         if user_input.key == 'ENTER' and user_input.alt:
             # Alt+Enter: toggle fullscreen
             tdl.set_fullscreen(not tdl.get_fullscreen())
-        elif user_input.key == 'ESCAPE':
+        elif user_input.key == '0':
             return True  # exit game
 
         if user_input.key == 'KP8':
