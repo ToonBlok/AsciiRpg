@@ -39,8 +39,8 @@ class Game:
 
         # Spawn player, first specify Y (which of the top tiles to start at), then X (which of the horizontal tiles to start at)
         self.player = Player(player_y, player_x, (255,255,255))
-        self.cat = Cat(self.SCREEN_WIDTH + 4, self.SCREEN_HEIGHT, (255,255,255))
-        self.entities = [self.player, self.cat]
+        #self.cat = Cat(self.SCREEN_WIDTH + 4, self.SCREEN_HEIGHT, (255,255,255))
+        self.entities = [self.player]
 
 
 
