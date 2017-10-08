@@ -22,6 +22,10 @@ class Game:
         # Create an offscreen console
         self.console = tdl.Console(self.SCREEN_WIDTH, self.SCREEN_HEIGHT)
 
+        # Map
+        self.map = Map()
+        self.map.create(self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
+
         try:
             player_y = 1
             player_x = 1
@@ -38,9 +42,6 @@ class Game:
         self.cat = Cat(self.SCREEN_WIDTH + 4, self.SCREEN_HEIGHT, (255,255,255))
         self.entities = [self.player, self.cat]
 
-        # Map
-        self.map = Map()
-        self.map.create(self.SCREEN_HEIGHT, self.SCREEN_WIDTH)
 
 
     def _render(self):
